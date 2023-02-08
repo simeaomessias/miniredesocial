@@ -1,0 +1,70 @@
+<div class="container-fluid px-0 py-0 mt-0 d-flex flex-column">
+    
+        {{!-- Login e Cadastre-se --}}
+        <div>
+
+            {{!-- Login --}}
+            <div class="container-fluid px-0 py-0 d-flex flex-column mt-3 home-login-div">
+
+                <div class="container-fluid d-flex flex-column text-center home-login-titulo">
+                    <span>Login</span>
+                </div>
+
+                <div class="d-flex flex-column px-2 mt-2">
+                    <label for="nomeUsuario"><b>Nome de usuário</b></label>
+                    <input type="text" name="nomeUsuario" id="input-nomeUsuario" class="px-2 py-1" autofocus autocomplete="off" value="{{nomeUsuario}}">
+                </div>
+
+                <div class="d-flex flex-column px-2 mt-2">
+                    <label for="senha"><b>Senha</b></label>
+                    <input type="password" name="senha" id="input-senha" class="px-2 py-1 login-input" autocomplete="off" value="{{senha}}">
+                    <span class="erro-validacao text-center mt-2">{{erro}}</span>
+                </div>
+
+                <div class="d-flex flex-column px-2 mt-3">
+                    <input type="submit" id="input-submit" class="py-1 home-login-btn" value="Acessar" >
+                </div>
+
+                <div class="d-flex flex-column px-2 mt-3 mb-3 text-center">
+                    <a href="">Esqueceu a senha?</a>
+                </div>
+            
+            </div>
+
+            {{!-- Cadastre-se --}}
+            <div class="container-fluid px-0 py-0 d-flex flex-column mt-3 text-center home-senha-div">
+
+                <div class="d-flex flex-column px-2 mt-3 mb-3">
+                    <span>Não tem uma conta? <a href="">Cadastre-se</a></span>
+                </div>
+
+            </div>
+
+        </div>
+
+        {{!-- Últimas postagens --}}
+        <div class="container-fluid px-0 py-0 d-flex flex-column mt-3 home-postagens-div">
+
+            <div class="container-fluid d-flex flex-column text-center home-postagens-titulo">
+                <span>Mais recentes...</span>
+            </div>
+
+            {{#if postagens}}
+
+                {{#each postagens}}
+
+                    <div class="home-publicacao">
+                        <span><b>{{usuario}}</b> ({{nome}})</span><br>
+                        <span>{{conteudo}}</span><br>
+                        <span>{{hora}}</span>
+                        <span><i>Quem reagiu?</i></span><br><br>
+
+                    </div>
+
+                {{/each}}
+
+            {{/if}}
+
+        </div>
+
+</div>

@@ -1,0 +1,81 @@
+/* Google font (Robot)*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* Variables */
+:root {
+    --branco: rgb(255,255,255);
+    --preto: rgb(0,0,0);
+    --azul: rgb(0,0,255);
+    --smencon: rgb(200,100,0);
+    --cinza: rgb(225,225,225);
+    --cinza-claro: rgb(250,250,250);
+    --khaki: rgb(240, 230, 140);
+    --khaki-green: rgb(190,180,90);
+}
+
+/* Reset */
+*, body{
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--cinza-claro);
+}
+
+/* HOME */
+.home-nav, .home-nav > a {
+    background-color: var(--khaki);
+}
+
+.home-nav-logo {
+    background-color: var(--branco);
+    border: none;
+    text-decoration: none;
+    height: 100%;
+    font-size: 2.0rem;
+    color: var(--preto);
+}
+
+
+.home-login-div, .home-senha-div {
+    background-color: var(--branco);
+    border: 1px solid black;
+    width: 350px;
+}
+
+.home-login-titulo, .home-postagens-titulo {
+    background-color: var(--khaki);
+    border-bottom: 1px solid black;
+    font-size: 1.5rem;
+    /* font-weight: bold; */
+}
+
+.home-login-btn {
+    background-color: var(--khaki);
+    border: 1px solid var(--preto);
+    font-size: 1.2rem;
+}
+
+.home-login-btn:hover {
+    background-color: var(--khaki-green);
+}
+
+.home-postagens-div {
+    background-color: var(--branco);
+    border: 1px solid black;
+    width: 90%;
+    min-width: 350px;
+    /* max-width: 750px; */
+}
+
+.home-publicacao {
+    width: 90%;
+}
+
+
+@media (max-width: 767px) {
+
+
+}
