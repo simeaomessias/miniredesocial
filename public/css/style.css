@@ -8,7 +8,7 @@
     --azul: rgb(0,0,255);
     --smencon: rgb(200,100,0);
     --cinza: rgb(225,225,225);
-    --cinza-claro: rgb(250,250,250);
+    --cinza-claro: rgb(235,235,235);
     --khaki: rgb(240, 230, 140);
     --khaki-green: rgb(190,180,90);
 }
@@ -21,35 +21,41 @@
 }
 
 body {
-    background-color: var(--cinza-claro);
+    background-color: var(--branco);
 }
 
 /* HOME */
 .home-nav, .home-nav > a {
     background-color: var(--khaki);
 }
-
 .home-nav-logo {
     background-color: var(--branco);
     border: none;
     text-decoration: none;
     height: 100%;
-    font-size: 2.0rem;
+    font-size: 1.5rem;
     color: var(--preto);
 }
 
+.home-login-div, .home-cadastro-div {
+    width: 90%;
+    min-width: 300px;
+    max-width: 350px;
+    margin: 0 auto;
+}
 
-.home-login-div, .home-senha-div {
-    background-color: var(--branco);
-    border: 1px solid black;
-    width: 350px;
+.home-cadastro-div > p {
+    font-size: 1.2rem;
 }
 
 .home-login-titulo, .home-postagens-titulo {
     background-color: var(--khaki);
     border-bottom: 1px solid black;
     font-size: 1.5rem;
-    /* font-weight: bold; */
+}
+
+.home-login-input {
+    outline: none;
 }
 
 .home-login-btn {
@@ -64,18 +70,17 @@ body {
 
 .home-postagens-div {
     background-color: var(--branco);
-    border: 1px solid black;
-    width: 90%;
+    /* border-top: 1px solid black; */
+    width: 100%;
     min-width: 350px;
-    /* max-width: 750px; */
+    height: 250px;
 }
 
-.home-publicacao {
-    width: 90%;
+.home-postagem {
+    border: 1px solid black;
 }
 
 
 @media (max-width: 767px) {
-
-
 }
+

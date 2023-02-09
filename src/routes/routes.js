@@ -16,6 +16,35 @@ router.get('/', (req, res) => {
             conteudo: "Minha primeira publicação!",
             reacoes: ["@tammyriscarvalho", "marcosmessias"]
         },
+        {
+            usuario: "@usuariocomum",
+            nome: "Fernando Henrique",
+            hora: "07/02/23 - 20h45",
+            conteudo: "Minha primeira publicação!",
+            reacoes: ["@tammyriscarvalho", "marcosmessias"]
+        },
+        {
+            usuario: "@usuariocomum",
+            nome: "Fernando Henrique",
+            hora: "07/02/23 - 20h45",
+            conteudo: "Minha primeira publicação!",
+            reacoes: ["@tammyriscarvalho", "marcosmessias"]
+        },
+        {
+            usuario: "@usuariocomum",
+            nome: "Fernando Henrique",
+            hora: "07/02/23 - 20h45",
+            conteudo: "Minha primeira publicação!",
+            reacoes: ["@tammyriscarvalho", "marcosmessias"]
+        },
+        {
+            usuario: "@usuariocomum",
+            nome: "Fernando Henrique",
+            hora: "07/02/23 - 20h45",
+            conteudo: "Minha primeira publicação!",
+            reacoes: ["@tammyriscarvalho", "marcosmessias"]
+        },
+        
     ]
 
 
