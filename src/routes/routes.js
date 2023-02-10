@@ -56,6 +56,7 @@ router.get('/', (req, res) => {
 
 // Home - Criar nova conta
 router.get('/criar-conta', homeController.formCriarConta)
+// router.post('/criar-conta', homeController.criaConta)
 
 // - Recuperar senha
 router.get('/recuperar-senha', homeController.formRecuperarSenha)
