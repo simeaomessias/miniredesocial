@@ -3,7 +3,7 @@ import express from 'express'
 const router = express.Router();
 
 // Controllers
-// import homeController from "../controllers/homeController.js"
+import homeController from "../controllers/homeController.js"
 
 // Home
 router.get('/', (req, res) => {
@@ -53,5 +53,11 @@ router.get('/', (req, res) => {
         postagens: postagens
     })
 })
+
+// Home - Criar nova conta + Envio de senha inicial
+router.get('/criar-conta', homeController.formCriarConta)
+// router.post('/criar-conta', homeController.criaConta)
+// router.get('/enviar-senha-inicial/:id?', homeController.msgEmailSenhaInicial)
+// router.post('/enviar-senha-inicial', homeController.enviaSenhaInicial)
 
 export default router

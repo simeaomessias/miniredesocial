@@ -9,12 +9,12 @@
                 <h2 class="text-center">Login</h2>
 
                 <div class="d-flex flex-column px-2 mt-1">
-                    <label for="nomeUsuario">Nome de usuário</label>
+                    <label for="nomeUsuario"><b>Nome de usuário</b></label>
                     <input type="text" name="nomeUsuario" id="input-nomeUsuario" class="px-2 py-1 home-login-input" autofocus autocomplete="off" value="{{nomeUsuario}}">
                 </div>
 
                 <div class="d-flex flex-column px-2 mt-1">
-                    <label for="senha">Senha</label>
+                    <label for="senha"><b>Senha</b></label>
                     <input type="password" name="senha" id="input-senha" class="px-2 py-1 home-login-input" autocomplete="off" value="{{senha}}">
                     <span class="erro-validacao text-center mt-2">{{erro}}</span>
                 </div>
@@ -40,7 +40,7 @@
 
 
                 <div class="d-flex flex-column mt-1">
-                    <input type="submit" id="input-submit" class="py-1 home-login-btn" value="Criar conta" >
+                    <input type="submit" id="input-submit" class="py-1 home-login-btn" value="Criar conta" onclick='location.href="/criar-conta"'>
                 </div>
                 
                 <div class="d-flex flex-column mt-4 mb-3">
@@ -57,7 +57,7 @@
             <div class="row px-4">
                 {{#if postagens}}
                     {{#each postagens}}
-                        <div class="col-sm-6 col-md-4 mt-2">
+                        <div class="col-sm-6 col-md-4 text-center mt-2">
                             <span><b>{{usuario}}</b></span><br>
                             <span>{{conteudo}}</span><br>
                             <span>{{hora}}</span>
