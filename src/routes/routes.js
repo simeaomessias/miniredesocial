@@ -54,10 +54,11 @@ router.get('/', (req, res) => {
     })
 })
 
-// Home - Criar nova conta + Envio de senha inicial
+// Home - Criar nova conta
 router.get('/criar-conta', homeController.formCriarConta)
-// router.post('/criar-conta', homeController.criaConta)
-// router.get('/enviar-senha-inicial/:id?', homeController.msgEmailSenhaInicial)
-// router.post('/enviar-senha-inicial', homeController.enviaSenhaInicial)
+
+// - Recuperar senha
+router.get('/recuperar-senha', homeController.formRecuperarSenha)
+
 
 export default router

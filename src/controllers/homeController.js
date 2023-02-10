@@ -6,6 +6,14 @@ const formCriarConta = (req, res) => {
     })
 }
 
+const formRecuperarSenha = (req, res) => {
+    res.render('home/formRecuperarSenha', {
+        layout: 'mainHome'
+    })
+}
+
 export default {
-    formCriarConta
+    formCriarConta,
+
+    formRecuperarSenha
 }
