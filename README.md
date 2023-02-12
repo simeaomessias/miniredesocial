@@ -47,9 +47,6 @@ Desafio pessoal para o segundo projeto da **Mentoria Conquiste Sua Vaga - Time 2
   4. Executar o comando *npm start*. <br>
      Acesse http://localhost:8081 para visualizar no navegador.
 
-## Cronologia
-- **Dia 1 (06/02/23):** Criação e configuração do projeto. <br>
-
 ## Autor
 https://github.com/simeaomessias
 
