@@ -1,0 +1,27 @@
+<form action="/recuperar-dados" method="post">
+
+    <div class="mt-3 home-login-div">
+
+        <h2 class="text-center">Esqueceu seus dados?</h2>
+
+        <div class="d-flex flex-column px-2 mt-1">
+            <label for="email"><b>E-mail</b></label>
+            <input type="email" name="email" id="input-email" class="px-2 py-1 home-login-input" placeholder="Ex: monteiro@seuemail.com"autofocus autocomplete="off" value="{{email}}">
+            <span class="erro-validacao">{{erros.email}}</span>
+        </div>
+
+        <div class="container-fluid px-2 mt-1">
+            <div class="row px-1">
+                <div class="col px-2 mt-2">
+                    <input type="button" id="input-cancelar" class="py-1 home-login-btn" value="Voltar" onclick="location.href='/'" style="width: 100%">
+                </div>
+                <div class="col px-2 mt-2">
+                    <input type="submit" id="input-recuperar" class="py-1 home-login-btn" value="Recuperar" style="width: 100%">
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</form>
+

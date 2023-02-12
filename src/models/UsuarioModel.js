@@ -10,7 +10,7 @@ const UsuarioSchema = new mongoose.Schema({
     email: {type: String, required: true},
     senha: {type: String, required: true},
     /* vinculos:
-    pedidosEnviado,
+    pedidosEnviados,
     pedidosRecebidos
     publicacoes: */
 })
@@ -69,9 +69,13 @@ class Usuario {
         }
 
         // Usuario
-        regex = /^([a-z0-9])$/
-        if (!regex.test(this.dados.nome.toLowerCase())) {
-            this.erros.nome = "Nome de usuário inválido."
+        regex = /^([a-z0-9])+$/
+        if (regex.test(this.dados.usuario)) {
+            if (this.dados.usuario.length < 5) {
+                this.erros.nome = "Pelo menos 5 caracteres."
+            }
+        } else {
+            this.erros.usuario = "Usuário inválido."
         }
 
         // E-mail
@@ -81,13 +85,13 @@ class Usuario {
         }
 
         // Senha
-        regex = /^([a-zA-Z0-9])$/
+        regex = /^([a-zA-Z0-9])+$/
         if (regex.test(this.dados.senha)) {
             if (this.dados.senha.length < 6) {
                 this.erros.senha = "Pelo menos 6 caracteres."    
             }
         } else {
-            this.erros.nome = "Apenas letras e/ou números."
+            this.erros.senha = "Apenas letras e/ou números."
         }
         
         // Resultado da validação
@@ -127,6 +131,57 @@ class Usuario {
         }
     }
 
+    async enviarSenha(tipo) {
+
+        // Textos para o e-mail a ser enviado em função do tipo de envio
+        const opcoes = {
+            
+            dadosRecuperados: {
+                assunto: `Mini Rede Social (Recuperação de dados)`,
+                texto: ``,
+                html: `<h2>Olá, ${this.usuario.nome}.</h2> <h2>Recuperação de dados.</h2> <h2>Nome de usuário:</h2> <h1 style="color: blue">${this.usuario.usuario}</h1> <h2>Senha de acesso:</h2> <h1 style="color: blue">${this.usuario.senha}</h1>`
+            }
+        }
+
+        // Seleção do texto em função tipo passado como parâmetro
+        var assunto = opcoes[tipo].assunto
+        var texto = opcoes[tipo].texto
+        var html = opcoes[tipo].html
+
+        // Transportador
+        let transporter = nodemailer.createTransport({
+            host: process.env.emailServico,
+            port: process.env.emailPorta,
+            secure: false,
+            auth: {
+                user: process.env.emailUsuario,
+                pass: process.env.emailSenha
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
+        });
+
+        // Opções
+        let mailOptions = {
+            from: process.env.emailUsuario,
+            to: this.usuario.email,
+            subject: assunto,
+            text: texto,
+            html: html
+        };
+
+        // Envio
+        try {
+            transporter.sendMail(mailOptions, () => {})
+            return
+        } catch(e) {
+            console.log(e)
+            this.valido = false
+            return
+        }
+    }
+
     async listarUsuarios() {
         const resultado = UsuarioModel.find().sort({nome: 'asc'}).lean()
         return resultado
@@ -137,20 +192,24 @@ class Usuario {
         // Validação
         this.validar()
         if (!this.valido) return
+        console.log('Passei na validação')
 
         // Verificação de duplicidade de e-mail
         await this.verificarEmail()
         if (!this.valido) return
+        console.log('Passei na verificação de duplicidade de e-mail')
 
         // Verificação de duplicidade de nome de usuário
         await this.verificarUsuario()
         if (!this.valido) return
+        console.log('Passei na verificação de duplicidad de nome de usuário')
 
         // Criação do usuário no banco de dados
         this.usuario = await UsuarioModel.create(this.dados)
+        console.log('Passei da criação de usuário no banco')
     }
 
-    async verificarLogin(email, senha) {
+    async verificarLogin(usuario, senha) {
         
         this.usuario = await UsuarioModel.findOne({usuario: usuario, senha: senha}).lean()
         if (!this.usuario) {
@@ -160,4 +219,6 @@ class Usuario {
 }
 
 
-export default UsuarioModel
+export default {
+    Usuario
+}

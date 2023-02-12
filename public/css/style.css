@@ -42,6 +42,7 @@ body {
     min-width: 300px;
     max-width: 350px;
     margin: 0 auto;
+    height: 260px;
 }
 
 .home-cadastro-div > p {
@@ -64,8 +65,13 @@ body {
     font-size: 1.2rem;
 }
 
-.home-login-btn:hover {
+.home-login-btn:hover, .home-login-btn:focus {
     background-color: var(--khaki-green);
+}
+
+.erro-validacao {
+    color: red;
+    font-size: 14px;
 }
 
 .home-postagens-div {
@@ -80,7 +86,22 @@ body {
     border: 1px solid black;
 }
 
+/* USUÁRIO */
 
-@media (max-width: 767px) {
+.usuario-sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.usuario-sidebar-btn {
+    background-color: var(--khaki);
+    border: 1px solid var(--preto);
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+.usuario-sidebar-btn:hover, .usuario-sidebar-btn:focus {
+    background-color: var(--khaki-green);
+    border: 1px solid var(--preto);
 }
 

@@ -1,0 +1,27 @@
+<div class="d-flex flex-column home-cadastro-div mt-3">
+
+    <h2 class="text-center">Recuperação de dados</h2>
+
+    <div class="container-fluid mt-2 mb-2">
+        <h3 class="text-center" style="color: blue">Conta encontrada!</h3>
+        <h5 class="text-center mt-2">Enviando dados por e-mail...</h5>
+        <h5 class="text-center mt-2 mb-2">Você será redirecionado!</h5>
+    </div>
+
+    <form action="/enviar-dados-recuperados" method="post">
+        <input type="hidden" name="id" value="{{id}}" style="display: none">
+        <input type="submit" value="" id="btnEnviarEmail" style="display: none">
+    </form>
+
+</div>
+
+<script>
+
+    const btnEnviarEmail = document.getElementById('btnEnviarEmail')
+    window.addEventListener('load', () => {
+        setTimeout( () => {
+            btnEnviarEmail.click()
+        }, 3000)
+    })
+
+</script>

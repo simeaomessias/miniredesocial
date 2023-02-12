@@ -1,56 +1,60 @@
-<div class="container mt-3">
+<div class="container py-0 mt-3">
 
-    <div class="row">
+    <div class="row py-0">
 
         <div class="col-md-6 mb-3 px-0">
 
             <div class="home-login-div">
 
-                <h2 class="text-center">Minha conta</h2>
+                <form action="/login" method="post">
+                    <h2 class="text-center">Minha conta</h2>
 
-                <div class="d-flex flex-column px-2 mt-1">
-                    <label for="nomeUsuario"><b>Nome de usuário</b></label>
-                    <input type="text" name="nomeUsuario" id="input-nomeUsuario" class="px-2 py-1 home-login-input" autofocus autocomplete="off" value="{{nomeUsuario}}">
-                </div>
+                    <div class="d-flex flex-column px-2 mt-1">
+                        <label for="nomeUsuario"><b>Nome de usuário</b></label>
+                        <input type="text" name="usuario" id="input-usuario" class="px-2 py-1 home-login-input" autofocus autocomplete="off" value="{{usuario}}">
+                    </div>
 
-                <div class="d-flex flex-column px-2 mt-1">
-                    <label for="senha"><b>Senha</b></label>
-                    <input type="password" name="senha" id="input-senha" class="px-2 py-1 home-login-input" autocomplete="off" value="{{senha}}">
-                    <span class="erro-validacao text-center mt-2">{{erro}}</span>
-                </div>
+                    <div class="d-flex flex-column px-2 mt-1">
+                        <label for="senha"><b>Senha</b></label>
+                        <input type="password" name="senha" id="input-senha" class="px-2 py-1 home-login-input" autocomplete="off" value="{{senha}}">
+                        <span class="erro-validacao text-center mt-2">{{erro}}</span>
+                    </div>
 
-                <div class="d-flex flex-column px-2 mt-1">
-                    <input type="submit" id="input-submit" class="py-1 home-login-btn" value="Entrar" >
-                </div>
+                    <div class="d-flex flex-column px-2 mt-1">
+                        <input type="submit" id="input-submit" class="py-1 home-login-btn" value="Entrar" >
+                    </div>
+                </form>
 
                 <div class="d-flex flex-column px-2 mt-2 mb-2">
-                    <a href="/recuperar-senha" style="text-align: right">Esqueceu seus dados?</a>
+                    <a href="/recuperar-dados" style="text-align: right">Esqueceu seus dados?</a>
                 </div>
 
             </div>
 
         </div>
 
-        <div class="col-md-6 px-0">
+        <div class="col-md-6 px-0 py-0">
 
-            <div class="d-flex flex-column justify-content-end home-cadastro-div">
+            <div class="d-flex flex-column py-0 justify-content-center home-cadastro-div">
 
                 <h2 class="text-center">Novo por aqui?</h2>
                 <p>Crie sua conta, forme vínculos e monte sua mini rede!</p>
 
 
-                <div class="d-flex flex-column mt-1">
+                <div class="d-flex flex-column mt-2">
                     <input type="submit" id="input-submit" class="py-1 home-login-btn" value="Criar conta" onclick='location.href="/criar-conta"'>
                 </div>
                 
-                <div class="d-flex flex-column mt-4 mb-3">
+                <div class="d-flex flex-column py-0 mt-4">
                     <input type="submit" id="input-submit" class="py-1 home-login-btn" value="Sobre a Mini Rede" >
                 </div>
 
             </div>
+
         </div>
 
-        <div class="col-md-12 px-0">
+        
+        {{!-- <div class="col-md-12 px-0">
 
             <h3 class="text-center mt-2">Últimas postagens públicas... </h3>
 
@@ -66,7 +70,7 @@
                 {{/if}}
             </div>
             
-        </div>
+        </div> --}}
 
     </div>
 
