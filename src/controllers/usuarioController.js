@@ -8,6 +8,14 @@ const telaPrincipal = (req, res) => {
     })
 }
 
+// Minha conta
+const minhaConta = (req, res) => {
+    res.render('usuario/minhaConta', {
+        layout: 'mainUsuario'
+    })
+}
+
 export default {
-    telaPrincipal
+    telaPrincipal,
+    minhaConta
 }

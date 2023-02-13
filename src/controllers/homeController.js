@@ -56,7 +56,6 @@ const recuperarDados = async (req, res) => {
     try {
         const usuario = new Usuario()
         await usuario.acharPorEmail(req.body.email)
-        console.log(usuario)
 
         if (!usuario.valido) {
             req.session.save( () => {
@@ -135,7 +134,7 @@ const enviarDadosRecuperados = async (req, res) => {
     }
 }
 
-// Home - Login
+// Home - Login e Logout
 const verificarLogin = async (req, res) => {
 
     const usuario = new Usuario()
@@ -156,6 +155,19 @@ const verificarLogin = async (req, res) => {
 
     return res.redirect(`/usuario`)
 }
+const logout = (req, res) => {
+    /*
+    req.session.destroy()
+    return res. redirect('/')
+    */
+
+    // BLOG APP
+    /*
+    req.logout()
+    req.flash("succcess_msg","Logout efetuado com sucesso!" )
+    res.redirect('/')
+    */
+}
 
 export default {
     formCriarConta,
@@ -164,5 +176,6 @@ export default {
     recuperarDados,
     msgEmailDadosRecuperados,
     enviarDadosRecuperados,
-    verificarLogin
+    verificarLogin,
+    logout
 }

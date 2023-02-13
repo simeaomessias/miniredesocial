@@ -131,6 +131,18 @@ class Usuario {
         }
     }
 
+    hashSenha(senha) {
+        try {
+            let salt = bcrypt.genSaltSync(10);
+            let hash = bcrypt.hashSync(this.dados.senha, salt);
+            this.dados.senha = hash
+        } catch(e) {
+            console.log(e)
+            this.erros.senha = "Erro ao criptografar a senha."
+            this.valido = false
+        }
+    }
+
     async enviarSenha(tipo) {
 
         // Textos para o e-mail a ser enviado em função do tipo de envio
@@ -192,17 +204,20 @@ class Usuario {
         // Validação
         this.validar()
         if (!this.valido) return
-        console.log('Passei na validação')
 
         // Verificação de duplicidade de e-mail
         await this.verificarEmail()
         if (!this.valido) return
-        console.log('Passei na verificação de duplicidade de e-mail')
 
         // Verificação de duplicidade de nome de usuário
         await this.verificarUsuario()
         if (!this.valido) return
-        console.log('Passei na verificação de duplicidad de nome de usuário')
+
+        console.log(this.senha)
+
+        // Hash de senha
+        this.hashSenha()
+        if (!this.valido) return
 
         // Criação do usuário no banco de dados
         this.usuario = await UsuarioModel.create(this.dados)

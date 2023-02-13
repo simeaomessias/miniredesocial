@@ -96,8 +96,10 @@ body {
 .usuario-sidebar-btn {
     background-color: var(--khaki);
     border: 1px solid var(--preto);
-    width: 100%;
+    display: block;
     font-size: 1.2rem;
+    text-decoration: none;
+    color: var(--preto)
 }
 
 .usuario-sidebar-btn:hover, .usuario-sidebar-btn:focus {

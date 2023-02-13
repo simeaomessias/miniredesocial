@@ -65,10 +65,39 @@ router.post('/recuperar-dados', homeController.recuperarDados)
 router.get('/enviar-dados-recuperados/:id?', homeController.msgEmailDadosRecuperados)
 router.post('/enviar-dados-recuperados/:id?', homeController.enviarDadosRecuperados)
 
-// Home - Login
+// Home - Login e Logout
 router.post('/login', homeController.verificarLogin)
 
+router.get('/logout', homeController.logout)
+
+
 // Usuario
-router.get('/usuario', usuarioController.telaPrincipal)
+router.get('/usuario/:id?', usuarioController.telaPrincipal)
+router.get('/usuario/:id?', usuarioController.minhaConta)
 
 export default router
+
+
+
+/*
+
+BLOGAPP
+
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/usuario/login',
+        failureFlash: true
+    })(req, res, next)
+})
+
+router.get('/logout', (req, res) => {
+    req.logout()
+    req.flash("succcess_msg","Logout efetuado com sucesso!" )
+    res.redirect('/')
+})
+
+You can call req.logout() which will invalidate the session on the server side.
+So even if the user sends a cookie, the cookie id will no longer be found in the session store,
+so the user will no longer be able to access resources which require authentication.
+*/
