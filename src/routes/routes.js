@@ -6,6 +6,9 @@ const router = express.Router();
 import homeController from "../controllers/homeController.js"
 import usuarioController from "../controllers/usuarioController.js"
 
+// Helpers
+import usuarioLogado from '../helpers/usuarioLogado.js'
+
 // Home
 router.get('/', (req, res) => {
 
@@ -67,13 +70,12 @@ router.post('/enviar-dados-recuperados/:id?', homeController.enviarDadosRecupera
 
 // Home - Login e Logout
 router.post('/login', homeController.verificarLogin)
-
 router.get('/logout', homeController.logout)
 
 
 // Usuario
-router.get('/usuario/:id?', usuarioController.telaPrincipal)
-router.get('/usuario/:id?', usuarioController.minhaConta)
+router.get('/usuario', usuarioLogado, usuarioController.telaPrincipal)
+router.get('/usuario/minha-conta', usuarioLogado, usuarioController.minhaConta)
 
 export default router
 

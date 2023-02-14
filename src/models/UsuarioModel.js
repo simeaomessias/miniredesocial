@@ -226,13 +226,20 @@ class Usuario {
 
     async verificarLogin(usuario, senha) {
         
-        this.usuario = await UsuarioModel.findOne({usuario: usuario, senha: senha}).lean()
+        this.usuario = await UsuarioModel.findOne({usuario: usuario}).lean()
+
         if (!this.usuario) {
             this.valido = false
+            return
+        }
+
+        if (!bcrypt.compareSync(senha, this.usuario.senha)){
+            this.valido = false;
+            return
         }
     }
-}
 
+}
 
 export default {
     Usuario

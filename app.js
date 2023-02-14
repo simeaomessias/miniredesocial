@@ -36,6 +36,15 @@ import session from 'express-session'
 import MongoStore from 'connect-mongo'
 app.use(session({
     secret: 'qualquerCoisa',
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 1000*60*60, // 60 minutes
+        httpOnly: true
+    }
+
+    /* Código antes das alterações
+    secret: 'qualquerCoisa',
     store: MongoStore.create({
         mongoUrl: mongoUri
     }),
@@ -45,6 +54,8 @@ app.use(session({
         maxAge: 1000*60*60, // 60 minutes
         httpOnly: true
     }
+    */
+
 }))
 
 // Connect-flash

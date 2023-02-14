@@ -137,36 +137,39 @@ const enviarDadosRecuperados = async (req, res) => {
 // Home - Login e Logout
 const verificarLogin = async (req, res) => {
 
+    // Inicialização do usuário logado
+    req.session.usuarioLogado = null
+
     const usuario = new Usuario()
     await usuario.verificarLogin(req.body.usuario, req.body.senha)
 
     if (!usuario.valido) {
         req.session.save( () => {
-            res.render('home/index', {
+            return res.render('home/index', {
                 layout: 'mainHome',
                 usuario: req.body.usuario,
                 senha: req.body.senha,
                 erro: "E-mail e/ou senha incorretos."
             })
-            return
         })
         return
     }
 
-    return res.redirect(`/usuario`)
+    // Especificação do usuário logado para salvar na sessão
+    const usuarioLogado = {
+        id: usuario.usuario._id,
+        nome: usuario.usuario.nome,
+    }
+    req.session.usuarioLogado = usuarioLogado;
+    req.session.save( () => {
+        return res.redirect(`/usuario`)
+    })
+
+    return
 }
 const logout = (req, res) => {
-    /*
     req.session.destroy()
     return res. redirect('/')
-    */
-
-    // BLOG APP
-    /*
-    req.logout()
-    req.flash("succcess_msg","Logout efetuado com sucesso!" )
-    res.redirect('/')
-    */
 }
 
 export default {
