@@ -22,7 +22,7 @@ app.set('views', './src/views');
 // Mongoose
 import mongoose from 'mongoose'
 mongoose.set('strictQuery', false);
-const mongoUri = process.env.mongoUri
+const mongoUri = process.env.mongoUri.toString()
 mongoose.Promise = global.Promise
 mongoose.connect(mongoUri).then( () => {
     console.log("BANCO DE DADOS: Conectado.")
