@@ -33,7 +33,6 @@ mongoose.connect(mongoUri).then( () => {
 
 // Session - Configurations and variables initialization
 import session from 'express-session'
-import MongoStore from 'connect-mongo'
 app.use(session({
     secret: 'qualquerCoisa',
     resave: true,
@@ -42,20 +41,6 @@ app.use(session({
         maxAge: 1000*60*60, // 60 minutes
         httpOnly: true
     }
-
-    /* Código antes das alterações
-    secret: 'qualquerCoisa',
-    store: MongoStore.create({
-        mongoUrl: mongoUri
-    }),
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 1000*60*60, // 60 minutes
-        httpOnly: true
-    }
-    */
-
 }))
 
 // Connect-flash
