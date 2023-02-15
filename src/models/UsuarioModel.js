@@ -28,6 +28,7 @@ class Usuario {
             email: "",
             senha: "",
         };
+        this.novaSenhaGerada = null;
         this.usuario = null;
         this.valido = true;
     }
@@ -72,7 +73,7 @@ class Usuario {
         regex = /^([a-z0-9])+$/
         if (regex.test(this.dados.usuario)) {
             if (this.dados.usuario.length < 5) {
-                this.erros.nome = "Pelo menos 5 caracteres."
+                this.erros.usuario = "Pelo menos 5 caracteres."
             }
         } else {
             this.erros.usuario = "Usuário inválido."
@@ -107,15 +108,17 @@ class Usuario {
             this.erros.email = "Email já utilizado em outra conta."
             this.valido = false
         }
+        return
     }
 
     async verificarUsuario() {
         this.usuario = await UsuarioModel.findOne({usuario: this.dados.usuario}).lean()
 
         if (this.usuario) {
-            this.erros.email = "Nome de usuário indisponível."
+            this.erros.usuario = "Nome de usuário indisponível."
             this.valido = false
         }
+        return
     }
 
     async acharPorId(id) {
@@ -129,21 +132,45 @@ class Usuario {
             this.erros.email = "Email não encontrado."
             this.valido = false
         }
+        return
     }
 
     hashSenha(senha) {
         try {
             let salt = bcrypt.genSaltSync(10);
-            let hash = bcrypt.hashSync(this.dados.senha, salt);
-            this.dados.senha = hash
+            let hash = bcrypt.hashSync(senha, salt);
+            return hash
         } catch(e) {
-            console.log(e)
             this.erros.senha = "Erro ao criptografar a senha."
             this.valido = false
+            return null
         }
     }
 
-    async enviarSenha(tipo) {
+    async gerarNovaSenha(id) {
+
+        try {
+
+            const novaSenha = Math.random().toString(36).slice(-6) // 6 caracteres
+            this.novaSenhaGerada = novaSenha
+            const hash = this.hashSenha(novaSenha)
+            console.log(this.novaSenhaGerada, hash)
+            this.usuario = await UsuarioModel.findOneAndUpdate({_id: id}, {senha: hash}, {new: true})
+            return
+
+        } catch(e) {
+            
+            console.log(e)
+            this.valido = false
+            return
+
+        }
+
+        return
+        
+    }
+
+    async enviarEmail(tipo) {
 
         // Textos para o e-mail a ser enviado em função do tipo de envio
         const opcoes = {
@@ -151,7 +178,7 @@ class Usuario {
             dadosRecuperados: {
                 assunto: `Mini Rede Social (Recuperação de dados)`,
                 texto: ``,
-                html: `<h2>Olá, ${this.usuario.nome}.</h2> <h2>Recuperação de dados.</h2> <h2>Nome de usuário:</h2> <h1 style="color: blue">${this.usuario.usuario}</h1> <h2>Senha de acesso:</h2> <h1 style="color: blue">${this.usuario.senha}</h1>`
+                html: `<h2>Olá, ${this.usuario.nome}.</h2> <h2>Recuperação de dados.</h2> <h2>Nome de usuário:</h2> <h1 style="color: blue">${this.usuario.usuario}</h1> <h2>Nova senha de acesso:</h2> <h1 style="color: blue">${this.novaSenhaGerada}</h1>`
             }
         }
 
@@ -216,7 +243,7 @@ class Usuario {
         console.log(this.senha)
 
         // Hash de senha
-        this.hashSenha()
+        this.dados.senha = this.hashSenha(this.dados.senha)
         if (!this.valido) return
 
         // Criação do usuário no banco de dados

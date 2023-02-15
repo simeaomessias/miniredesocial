@@ -51,8 +51,6 @@ const formRecuperarDados = (req, res) => {
 }
 const recuperarDados = async (req, res) => {
 
-    console.log(req.body.email)
-
     try {
         const usuario = new Usuario()
         await usuario.acharPorEmail(req.body.email)
@@ -95,19 +93,28 @@ const msgEmailDadosRecuperados = (req, res) => {
 const enviarDadosRecuperados = async (req, res) => {
 
     try {
+
         const usuario = new Usuario()
+
         await usuario.acharPorId(req.body.id)
-    
         if (usuario.usuario === null) {
-            req.flash('msgErro', "Erro ao enviar os dados. E-mail não cadastrado.")
+            req.flash('msgErro', "Erro ao enviar os dados por e-mail. E-mail não cadastrado.")
             req.session.save( () => {
-                res.redirect('/recuperar-dados')
+                return res.redirect('/recuperar-dados')
             })
             return
         }
 
-        await usuario.enviarSenha('dadosRecuperados')
+        await usuario.gerarNovaSenha(req.body.id)
+        if (!usuario.valido) {
+            req.flash('msgErro', `Erro ao enviar os dados por e-mail. Geração de senha inválida.`)
+            req.session.save( () => {
+                return res.redirect('/recuperar-dados')
+            })
+            return
+        }
 
+        await usuario.enviarEmail('dadosRecuperados')
         if (!usuario.valido) {
             req.flash('msgErro', `Erro ao enviar os dados por e-mail. Tente novamente.`)
             req.session.save( () => {
@@ -116,8 +123,7 @@ const enviarDadosRecuperados = async (req, res) => {
             return
         }
 
-        req.flash('msgSucesso',
-         `Dados enviados! Remetente: sm-remetente@outlook.com". Verifique a pasta de Spam.`
+        req.flash('msgSucesso',`Dados enviados! Remetente: sm-remetente@outlook.com". Verifique a pasta de Spam.`
          )
         req.session.save( () => {
             return res.redirect('/')
@@ -159,6 +165,7 @@ const verificarLogin = async (req, res) => {
     const usuarioLogado = {
         id: usuario.usuario._id,
         nome: usuario.usuario.nome,
+        usuario: usuario.usuario.usuario
     }
     req.session.usuarioLogado = usuarioLogado;
     req.session.save( () => {
