@@ -9,6 +9,8 @@ const UsuarioSchema = new mongoose.Schema({
     usuario: {type: String, required: true},
     email: {type: String, required: true},
     senha: {type: String, required: true},
+    statusConta: {type: String, required: true} // primeiroAcesso, ativa, inativa
+
     /* vinculos:
     pedidosEnviados,
     pedidosRecebidos
@@ -26,7 +28,7 @@ class Usuario {
             nome: "",
             usuario: "",
             email: "",
-            senha: "",
+            senha: ""
         };
         this.novaSenhaGerada = null;
         this.usuario = null;
@@ -240,11 +242,12 @@ class Usuario {
         await this.verificarUsuario()
         if (!this.valido) return
 
-        console.log(this.senha)
-
         // Hash de senha
         this.dados.senha = this.hashSenha(this.dados.senha)
         if (!this.valido) return
+
+        // Criação do atributo statusConta em this.dados e atribuição de valor inicial
+        this.dados.statusConta = "primeiroAcesso"
 
         // Criação do usuário no banco de dados
         this.usuario = await UsuarioModel.create(this.dados)
