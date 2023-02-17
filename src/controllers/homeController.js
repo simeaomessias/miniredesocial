@@ -34,11 +34,62 @@ const criarConta = async (req, res) => {
     } catch(e) {
 
         req.flash('msgErro', "Erro ao criar a conta!")
+        console.log(e)
         req.session.save( () => {
             return res.redirect('/criar-conta')
         })
         return
 
+    }
+
+}
+
+// Home - Ativar conta
+const formAtivarConta = (req, res) => {
+
+    res.render('home/formAtivarConta', {
+        layout: 'mainHome',
+        usuario: req.session.usuarioLogado.usuario,
+        email: req.session.usuarioLogado.email
+    })
+
+}
+const ativarConta = async (req, res) => {
+
+    try {
+        
+        const usuario = new Usuario()
+
+        await usuario.ativarConta(req.session.usuarioLogado.id, req.body.codigo)
+
+        if (!usuario.valido) {
+            req.session.save( () => {
+                return res.render('home/formAtivarConta', {
+                    layout: 'mainHome',
+                    usuario: req.session.usuarioLogado.usuario,
+                    email: req.session.usuarioLogado.email,
+                    codigo: req.body.codigo,
+                    erro: "Código inválido."
+                })
+            })
+            return
+        }
+
+        req.flash('msgSucesso', "Conta ativada com sucesso!")
+        req.session.save( () => {
+            
+            return res.redirect(`/usuario`)
+        })
+        return
+
+
+    } catch(e) {
+
+        req.flash('msgErro', `Erro ao ativar a conta. Tente novamente.`)
+        req.session.save( () => {
+            return res.redirect('/usuario/ativar-conta')
+        })
+        return
     }
 
 }
@@ -165,14 +216,24 @@ const verificarLogin = async (req, res) => {
     const usuarioLogado = {
         id: usuario.usuario._id,
         nome: usuario.usuario.nome,
-        usuario: usuario.usuario.usuario
+        usuario: usuario.usuario.usuario,
+        email: usuario.usuario.email
     }
     req.session.usuarioLogado = usuarioLogado;
+
+    // Verificação se é o primeiro acesso
+    if (usuario.usuario.statusConta === "primeiroAcesso") {
+        req.session.save( () => {
+            return res.redirect('/usuario/ativar-conta')
+        })
+        return
+    }
+
+    // Tela inicial do usuário
     req.session.save( () => {
         return res.redirect(`/usuario`)
     })
 
-    return
 }
 const logout = (req, res) => {
     req.session.destroy()
@@ -182,6 +243,8 @@ const logout = (req, res) => {
 export default {
     formCriarConta,
     criarConta,
+    formAtivarConta,
+    ativarConta,
     formRecuperarDados,
     recuperarDados,
     msgEmailDadosRecuperados,

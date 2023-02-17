@@ -72,11 +72,17 @@ router.post('/enviar-dados-recuperados/:id?', homeController.enviarDadosRecupera
 router.post('/login', homeController.verificarLogin)
 router.get('/logout', homeController.logout)
 
+// Usuário - Ativar conta
+router.get('/usuario/ativar-conta', usuarioLogado, homeController.formAtivarConta)
+router.post('/usuario/ativar-conta', usuarioLogado, homeController.ativarConta)
+
 // Usuario
 router.get('/usuario', usuarioLogado, usuarioController.telaPrincipal)
 router.get('/usuario/meus-contatos', usuarioLogado, usuarioController.meusContatos)
 router.get('/usuario/minhas-postagens', usuarioLogado, usuarioController.minhasPostagens)
 router.get('/usuario/minha-conta', usuarioLogado, usuarioController.minhaConta)
+
+
 
 export default router
 

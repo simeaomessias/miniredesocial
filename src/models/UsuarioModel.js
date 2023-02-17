@@ -9,7 +9,8 @@ const UsuarioSchema = new mongoose.Schema({
     usuario: {type: String, required: true},
     email: {type: String, required: true},
     senha: {type: String, required: true},
-    statusConta: {type: String, required: true} // primeiroAcesso, ativa, inativa
+    statusConta: {type: String, required: true}, // primeiroAcesso, ativa, inativa
+    codigoAtivacao: {type: String, required: true}
 
     /* vinculos:
     pedidosEnviados,
@@ -28,7 +29,8 @@ class Usuario {
             nome: "",
             usuario: "",
             email: "",
-            senha: ""
+            senha: "",
+            codigo: ""
         };
         this.novaSenhaGerada = null;
         this.usuario = null;
@@ -162,7 +164,6 @@ class Usuario {
 
         } catch(e) {
             
-            console.log(e)
             this.valido = false
             return
 
@@ -170,6 +171,12 @@ class Usuario {
 
         return
         
+    }
+
+    gerarCodigoAtivacao() {
+
+        return Math.random().toString(36).slice(-6).toLowerCase() // 6 caracteres
+
     }
 
     async enviarEmail(tipo) {
@@ -246,12 +253,12 @@ class Usuario {
         this.dados.senha = this.hashSenha(this.dados.senha)
         if (!this.valido) return
 
-        // Criação do atributo statusConta em this.dados e atribuição de valor inicial
+        // Criação statusConta e codigoAtivacao em this.dados e atribuição de valores iniciais
         this.dados.statusConta = "primeiroAcesso"
+        this.dados.codigoAtivacao = this.gerarCodigoAtivacao()
 
         // Criação do usuário no banco de dados
         this.usuario = await UsuarioModel.create(this.dados)
-        console.log('Passei da criação de usuário no banco')
     }
 
     async verificarLogin(usuario, senha) {
@@ -267,6 +274,32 @@ class Usuario {
             this.valido = false;
             return
         }
+    }
+
+    async ativarConta(id, codigo) {
+
+        try {
+
+            this.usuario = await UsuarioModel.findOne({_id: id}).lean()
+
+            // Se o código de ativação não for o correto
+            if (this.usuario.codigoAtivacao !== codigo) {
+                this.valido = false
+                return 
+            }
+
+            // Código correto. Atualização de statusConta e codigoAtivacao.
+            this.usuario = await UsuarioModel.findOneAndUpdate({_id: id}, {statusConta: "ativa", codigoAtivacao: null}, {new: true})
+            return
+
+        } catch(e) {
+            
+            this.valido = false
+            return
+
+        }
+
+        return
     }
 
 }
