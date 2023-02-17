@@ -184,6 +184,12 @@ class Usuario {
         // Textos para o e-mail a ser enviado em função do tipo de envio
         const opcoes = {
             
+            codigoAtivacao: {
+                assunto: `Mini Rede Social (Código de Ativação)`,
+                texto: ``,
+                html: `<h2>Bem-vindo(a), ${this.dados.nome}.</h2> <h2>Seu código de ativação é:.</h2><h1 style="color: blue">${this.dados.codigoAtivacao}</h1>`
+            },
+
             dadosRecuperados: {
                 assunto: `Mini Rede Social (Recuperação de dados)`,
                 texto: ``,
@@ -259,6 +265,10 @@ class Usuario {
 
         // Criação do usuário no banco de dados
         this.usuario = await UsuarioModel.create(this.dados)
+
+        // Envio do e-mail com o código de ativação
+        this.enviarEmail("codigoAtivacao")
+
     }
 
     async verificarLogin(usuario, senha) {
@@ -282,7 +292,7 @@ class Usuario {
 
             this.usuario = await UsuarioModel.findOne({_id: id}).lean()
 
-            // Se o código de ativação não for o correto
+            // Código inválido
             if (this.usuario.codigoAtivacao !== codigo) {
                 this.valido = false
                 return 
